@@ -1,0 +1,16 @@
+import assert from 'node:assert/strict';
+import {readFile} from 'node:fs/promises';
+const root = new URL('../', import.meta.url);
+const source = await readFile(new URL('worker/index.js', root), 'utf8');
+const config = JSON.parse(await readFile(new URL('wrangler.jsonc', root), 'utf8'));
+assert.equal(config.main, 'worker/index.js');
+assert.equal(config.name, 'ecoangler');
+const {default: worker} = await import('data:text/javascript;base64,' + Buffer.from(source).toString('base64'));
+assert.equal(typeof worker.fetch, 'function');
+const health = await worker.fetch(new Request('https://example.test/api/health'), {}, {});
+assert.equal(health.status, 200);
+assert.equal((await health.json()).model_ready, true);
+const page = await worker.fetch(new Request('https://example.test/'), {}, {});
+assert.equal(page.status, 200);
+assert.match(await page.text(), /EcoAngler/);
+console.log('Worker configuration, module, health route and HTML route verified.');

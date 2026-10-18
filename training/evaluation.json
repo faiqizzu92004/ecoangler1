@@ -1,0 +1,155 @@
+{
+  "random10Fold": {
+    "Random Forest": {
+      "accuracy": 0.5227655986509275,
+      "f1Macro": 0.5138172870681869,
+      "precisionMacro": 0.5125132896805616,
+      "recallMacro": 0.5214963707426019,
+      "confusionMatrix": [
+        [
+          111,
+          54,
+          34
+        ],
+        [
+          73,
+          65,
+          57
+        ],
+        [
+          33,
+          32,
+          134
+        ]
+      ]
+    },
+    "XGBoost": {
+      "accuracy": 0.524451939291737,
+      "f1Macro": 0.5174717123919262,
+      "precisionMacro": 0.5151254356633582,
+      "recallMacro": 0.5233088519520681,
+      "confusionMatrix": [
+        [
+          107,
+          57,
+          35
+        ],
+        [
+          69,
+          69,
+          57
+        ],
+        [
+          24,
+          40,
+          135
+        ]
+      ]
+    },
+    "Ensemble": {
+      "accuracy": 0.5328836424957841,
+      "f1Macro": 0.5225387306346826,
+      "precisionMacro": 0.5211263953710527,
+      "recallMacro": 0.5315466219988833,
+      "confusionMatrix": [
+        [
+          112,
+          52,
+          35
+        ],
+        [
+          68,
+          65,
+          62
+        ],
+        [
+          27,
+          33,
+          139
+        ]
+      ]
+    }
+  },
+  "chronological80_20": {
+    "trainingRows": 474,
+    "validationRows": 119,
+    "trainingThrough": "2026-05-30",
+    "validationFrom": "2026-05-31",
+    "validationThrough": "2026-09-29",
+    "cutoffs": [
+      3.280963759458383,
+      7.2599315068493135
+    ],
+    "models": {
+      "Random Forest": {
+        "accuracy": 0.5042016806722689,
+        "f1Macro": 0.3875139353400223,
+        "precisionMacro": 0.34117647058823525,
+        "recallMacro": 0.45769933049300066,
+        "confusionMatrix": [
+          [
+            18,
+            0,
+            13
+          ],
+          [
+            5,
+            0,
+            30
+          ],
+          [
+            11,
+            0,
+            42
+          ]
+        ]
+      },
+      "XGBoost": {
+        "accuracy": 0.5042016806722689,
+        "f1Macro": 0.3844393592677345,
+        "precisionMacro": 0.3328947368421053,
+        "recallMacro": 0.45769933049300066,
+        "confusionMatrix": [
+          [
+            18,
+            0,
+            13
+          ],
+          [
+            10,
+            0,
+            25
+          ],
+          [
+            10,
+            1,
+            42
+          ]
+        ]
+      },
+      "Ensemble": {
+        "accuracy": 0.4957983193277311,
+        "f1Macro": 0.37893972403776327,
+        "precisionMacro": 0.32882882882882886,
+        "recallMacro": 0.4514100223169,
+        "confusionMatrix": [
+          [
+            18,
+            0,
+            13
+          ],
+          [
+            7,
+            0,
+            28
+          ],
+          [
+            12,
+            0,
+            41
+          ]
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "passed": true,
+  "cases": 993,
+  "probabilityTolerance": 0.000001,
+  "maxAbsoluteError": {
+    "Random Forest": 6.661338147750939e-16,
+    "XGBoost": 3.0703622699856936e-8,
+    "Ensemble": 1.5351811322172892e-8
+  },
+  "classPredictionsIdentical": true,
+  "elapsedMilliseconds": 120.39630000000001,
+  "includesInvalidInputChecks": true
+}

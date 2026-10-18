@@ -1,0 +1,7 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "ecoangler1",
+  "main": "worker/index.js",
+  "compatibility_date": "2026-10-18",
+  "workers_dev": true
+}

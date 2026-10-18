@@ -1,0 +1,305 @@
+{
+  "id": "ecoangler-api-v1",
+  "displayName": "EcoAngler RF + XGBoost",
+  "version": "2026-10-17",
+  "features": [
+    "airTemp",
+    "windSpeed",
+    "pressure",
+    "month",
+    "weekday",
+    "isWeekend"
+  ],
+  "classes": [
+    "Poor",
+    "Good",
+    "High"
+  ],
+  "weights": [
+    0.5,
+    0.5
+  ],
+  "target": "reported catches per visitor",
+  "classCutoffs": [
+    3.3927762303333333,
+    7.613239343981306
+  ],
+  "trainingRows": 593,
+  "trainingFrom": "2025-02-01",
+  "trainingThrough": "2026-09-29",
+  "trainingLocation": "Honmoku, Japan",
+  "sourceFile": "hanmoku_with_history.csv",
+  "sourceSha256": "00a5fd3fefbfe6afb50ff0f7adabd7c3eddc04289dae6652cfac6f2d2085983d",
+  "originalCatchRows": 593,
+  "excludedWithoutCompleteHistoricalWeather": 0,
+  "historicalWeather": {
+    "source": "Open-Meteo Historical Weather API",
+    "file": "honmoku_archive.json",
+    "sha256": "6954ea050b604455bbfa73c5068b0be015802df84fbefbb2f6e7a98c2dfc408c",
+    "latitude": 35.46573,
+    "longitude": 139.61539,
+    "timezone": "Asia/Tokyo",
+    "hourlyUnits": {
+      "time": "iso8601",
+      "temperature_2m": "°C",
+      "wind_speed_10m": "km/h",
+      "pressure_msl": "hPa"
+    },
+    "aggregation": "Arithmetic mean of 24 complete hourly values per local calendar date",
+    "requestedLatitude": 35.4267,
+    "requestedLongitude": 139.6863
+  },
+  "trainingRanges": {
+    "airTemp": {
+      "min": -0.19166666666666668,
+      "max": 32.68333333333333
+    },
+    "windSpeed": {
+      "min": 2.9625,
+      "max": 27.6875
+    },
+    "pressure": {
+      "min": 994.5166666666668,
+      "max": 1029.7291666666667
+    },
+    "month": {
+      "min": 1.0,
+      "max": 12.0
+    },
+    "weekday": {
+      "min": 1.0,
+      "max": 7.0
+    },
+    "isWeekend": {
+      "min": 0.0,
+      "max": 1.0
+    }
+  },
+  "featureUnits": {
+    "airTemp": "°C",
+    "windSpeed": "km/h",
+    "pressure": "hPa",
+    "month": "1–12",
+    "weekday": "Monday=1, Sunday=7",
+    "isWeekend": "0 or 1"
+  },
+  "apiMapping": {
+    "airTemp": "daily mean of hourly temperature_2m",
+    "windSpeed": "daily mean of hourly wind_speed_10m; wind_speed_unit=kmh",
+    "pressure": "daily mean of hourly pressure_msl",
+    "month": "selected local date month",
+    "weekday": "selected local date day of week, Monday=1",
+    "isWeekend": "selected local date Saturday/Sunday"
+  },
+  "status": "research-prototype",
+  "probabilitiesCalibrated": false,
+  "parameters": {
+    "rf": {
+      "n_estimators": 300,
+      "max_depth": 8,
+      "min_samples_leaf": 5,
+      "max_features": "sqrt",
+      "random_state": 42,
+      "n_jobs": 2
+    },
+    "xgboost": {
+      "n_estimators": 300,
+      "max_depth": 3,
+      "learning_rate": 0.05,
+      "min_child_weight": 5,
+      "subsample": 0.85,
+      "colsample_bytree": 0.85,
+      "reg_lambda": 3,
+      "objective": "multi:softprob",
+      "num_class": 3,
+      "eval_metric": "mlogloss",
+      "tree_method": "hist",
+      "random_state": 42,
+      "n_jobs": 2
+    }
+  },
+  "versions": {
+    "python": "3.12.14",
+    "numpy": "2.5.4",
+    "pandas": "3.0.1",
+    "scikit-learn": "1.9.1",
+    "xgboost": "3.4.1"
+  },
+  "evaluation": {
+    "random10Fold": {
+      "Random Forest": {
+        "accuracy": 0.5227655986509275,
+        "f1Macro": 0.5138172870681869,
+        "precisionMacro": 0.5125132896805616,
+        "recallMacro": 0.5214963707426019,
+        "confusionMatrix": [
+          [
+            111,
+            54,
+            34
+          ],
+          [
+            73,
+            65,
+            57
+          ],
+          [
+            33,
+            32,
+            134
+          ]
+        ]
+      },
+      "XGBoost": {
+        "accuracy": 0.524451939291737,
+        "f1Macro": 0.5174717123919262,
+        "precisionMacro": 0.5151254356633582,
+        "recallMacro": 0.5233088519520681,
+        "confusionMatrix": [
+          [
+            107,
+            57,
+            35
+          ],
+          [
+            69,
+            69,
+            57
+          ],
+          [
+            24,
+            40,
+            135
+          ]
+        ]
+      },
+      "Ensemble": {
+        "accuracy": 0.5328836424957841,
+        "f1Macro": 0.5225387306346826,
+        "precisionMacro": 0.5211263953710527,
+        "recallMacro": 0.5315466219988833,
+        "confusionMatrix": [
+          [
+            112,
+            52,
+            35
+          ],
+          [
+            68,
+            65,
+            62
+          ],
+          [
+            27,
+            33,
+            139
+          ]
+        ]
+      }
+    },
+    "chronological80_20": {
+      "trainingRows": 474,
+      "validationRows": 119,
+      "trainingThrough": "2026-05-30",
+      "validationFrom": "2026-05-31",
+      "validationThrough": "2026-09-29",
+      "cutoffs": [
+        3.280963759458383,
+        7.2599315068493135
+      ],
+      "models": {
+        "Random Forest": {
+          "accuracy": 0.5042016806722689,
+          "f1Macro": 0.3875139353400223,
+          "precisionMacro": 0.34117647058823525,
+          "recallMacro": 0.45769933049300066,
+          "confusionMatrix": [
+            [
+              18,
+              0,
+              13
+            ],
+            [
+              5,
+              0,
+              30
+            ],
+            [
+              11,
+              0,
+              42
+            ]
+          ]
+        },
+        "XGBoost": {
+          "accuracy": 0.5042016806722689,
+          "f1Macro": 0.3844393592677345,
+          "precisionMacro": 0.3328947368421053,
+          "recallMacro": 0.45769933049300066,
+          "confusionMatrix": [
+            [
+              18,
+              0,
+              13
+            ],
+            [
+              10,
+              0,
+              25
+            ],
+            [
+              10,
+              1,
+              42
+            ]
+          ]
+        },
+        "Ensemble": {
+          "accuracy": 0.4957983193277311,
+          "f1Macro": 0.37893972403776327,
+          "precisionMacro": 0.32882882882882886,
+          "recallMacro": 0.4514100223169,
+          "confusionMatrix": [
+            [
+              18,
+              0,
+              13
+            ],
+            [
+              7,
+              0,
+              28
+            ],
+            [
+              12,
+              0,
+              41
+            ]
+          ]
+        }
+      }
+    }
+  },
+  "limitations": [
+    "Research prototype trained on one Japanese fishing facility; not validated for Malaysia or new locations.",
+    "Website variant uses six automatic numeric weather/calendar features and differs from Chapter 3 environmental predictors.",
+    "The original CSV weather columns have unverified provenance; this model replaces them with date-aligned Open-Meteo historical weather.",
+    "Weather aggregation is the arithmetic mean of 24 complete hourly values per local calendar day, in Celsius, km/h and sea-level hPa.",
+    "No tide category, water temperature, weather category or catch history is supplied to this website model.",
+    "Probabilities are uncalibrated model scores, not verified chances of catching fish.",
+    "Random shuffled CV mixes dates and is a diagnostic, not evidence of future accuracy.",
+    "The later catch dates have been examined in previous experiments, so chronological results are reused diagnostics, not a fresh holdout.",
+    "Training uses historical weather reanalysis, while serving uses advance forecasts; performance on advance forecasts has not been established.",
+    "Relative tercile class thresholds are fitted within each evaluation training partition; final serving model has fixed full-training thresholds.",
+    "Do not interpret reported catches per visitor as a universal catch guarantee or boating safety advice."
+  ],
+  "sources": [
+    "https://open-meteo.com/en/docs",
+    "https://open-meteo.com/en/docs/historical-weather-api",
+    "https://open-meteo.com/en/docs/marine-weather-api"
+  ],
+  "trained_through": "2026-09-29",
+  "cv_accuracy": 0.5328836424957841,
+  "chronological_accuracy": 0.4957983193277311,
+  "chronological_macro_f1": 0.37893972403776327
+}

@@ -1,0 +1,54 @@
+[
+  {
+    "name": "Seven complete local Japan days match exact hourly means",
+    "passed": true
+  },
+  {
+    "name": "Seven complete Malaysia local days retain location date boundaries",
+    "passed": true
+  },
+  {
+    "name": "Missing required weather hour excludes day rather than changing training aggregation",
+    "passed": true
+  },
+  {
+    "name": "Duplicate hour cannot masquerade as complete 24-hour day",
+    "passed": true
+  },
+  {
+    "name": "Wrong wind unit is rejected before ML inference",
+    "passed": true
+  },
+  {
+    "name": "Non-finite pressure cannot silently change model daily mean",
+    "passed": true
+  },
+  {
+    "name": "Coordinate input rejects absent, blank, out-of-range and non-finite values",
+    "passed": true
+  },
+  {
+    "name": "Forecast uses explicit ML units and local timezone; marine context is correctly named",
+    "passed": true
+  },
+  {
+    "name": "Marine upstream failure preserves real weather prediction with unavailable context",
+    "passed": true
+  },
+  {
+    "name": "Weather upstream failure prevents fabricated productivity prediction",
+    "passed": true
+  },
+  {
+    "name": "Impossible calendar date returns HTTP400 before contacting providers",
+    "passed": true
+  },
+  {
+    "name": "Valid leap day is accepted as a calendar date",
+    "passed": true
+  },
+  {
+    "name": "Router blocks unsupported methods and returns security headers",
+    "passed": true
+  }
+]

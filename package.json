@@ -1,0 +1,20 @@
+{
+  "name": "ecoangler1",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Malaysian fishing conditions with live APIs and an experimental RF/XGBoost ensemble",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "dev": "node scripts/preview.mjs",
+    "test": "node tests/api.mjs",
+    "validate": "node scripts/validate-artifact.mjs",
+    "deploy": "npm run build && wrangler deploy"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "devDependencies": {
+    "wrangler": "^4.102.0"
+  }
+}
