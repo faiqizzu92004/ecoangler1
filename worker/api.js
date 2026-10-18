@@ -51,12 +51,12 @@ export function coordinates(search) {
 
 export async function searchPlaces(query) {
   const q = query.trim();
-  if (q.length < 3) return {results: []};
+  if (q.length < 2) return {results: []};
   if (q.length > 100) throw new Error('Please use a shorter place name.');
   const url = new URL('https://geocoding-api.open-meteo.com/v1/search');
-  url.search = new URLSearchParams({name: q, count: '6', language: 'en', format: 'json', countryCode: 'MY'});
+  url.search = new URLSearchParams({name: q, count: '10', language: 'en', format: 'json'});
   const data = await upstream(url);
-  return {results: (data.results || []).filter(p => p.country_code === 'MY').map(p => ({
+  return {results: (data.results || []).filter(p => finite(p.latitude) && finite(p.longitude)).map(p => ({
     id: p.id, name: p.name, admin1: p.admin1 || '', country: p.country,
     latitude: p.latitude, longitude: p.longitude, timezone: p.timezone
   }))};
